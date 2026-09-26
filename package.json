@@ -1,0 +1,23 @@
+{
+  "name": "cse341-fleet-tracker-api",
+  "version": "1.0.0",
+  "description": "Vehicle Fleet & Maintenance Tracker REST API built with Node.js, Express, MongoDB, OAuth, and Swagger docs.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BYULabs/cse341-fleet-tracker-api.git"
+  },
+  "keywords": [],
+  "author": "Sebastián Iturralde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BYULabs/cse341-fleet-tracker-api/issues"
+  },
+  "homepage": "https://github.com/BYULabs/cse341-fleet-tracker-api#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
