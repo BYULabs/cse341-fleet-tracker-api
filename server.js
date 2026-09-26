@@ -1,11 +1,12 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+require('dotenv').config();
+const app = require('./src/app');
+const connectDB = require('./src/config/db');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const PORT = process.env.PORT || 8080;
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+// Connect to MongoDB then start Express Server
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
 });
