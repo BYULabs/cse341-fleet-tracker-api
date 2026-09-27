@@ -4,7 +4,11 @@
   "description": "Vehicle Fleet & Maintenance Tracker REST API built with Node.js, Express, MongoDB, OAuth, and Swagger docs.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,16 @@
   },
   "homepage": "https://github.com/BYULabs/cse341-fleet-tracker-api#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6"
   }
 }
