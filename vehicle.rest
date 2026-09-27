@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:8080/vehicles
+@vehicleId = 6ab85d4f1f36391a05c1af37
+
+### Get All Vehicles
+GET {{baseUrl}}
+Content-Type: application/json
+
+### Get Vehicle by ID
+GET {{baseUrl}}/{{vehicleId}}
+Content-Type: application/json
+
+### Create New Vehicle
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "vin": "11111111111111111",
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2022,
+  "licensePlate": "7XYZ890",
+  "mileage": 15400,
+  "fuelType": "Gasoline",
+  "status": "Active"
+}
+
+### Update Vehicle
+PUT {{baseUrl}}/{{vehicleId}}
+Content-Type: application/json
+
+{
+  "mileage": 16000,
+  "status": "In Maintenance"
+}
+
+### Delete Vehicle
+DELETE {{baseUrl}}/{{vehicleId}}
+Content-Type: application/json
