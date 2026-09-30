@@ -1,0 +1,75 @@
+@baseUrl = http://localhost:8080/users
+# Filled in automatically from the "Create New User" response; run that request first
+@userId = {{createUser.response.body._id}}
+
+### Get All Users
+GET {{baseUrl}}
+Content-Type: application/json
+
+### Create New User
+# @name createUser
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "oauthId": "github|123456",
+  "displayName": "Jane Driver",
+  "email": "jane.driver@example.com",
+  "role": "Driver"
+}
+
+### Get User by ID
+GET {{baseUrl}}/{{userId}}
+Content-Type: application/json
+
+### Update User
+PUT {{baseUrl}}/{{userId}}
+Content-Type: application/json
+
+{
+  "displayName": "Jane Manager",
+  "role": "Fleet Manager"
+}
+
+### Delete User
+DELETE {{baseUrl}}/{{userId}}
+Content-Type: application/json
+
+### ---------- Error cases ----------
+
+### Create User - missing required fields (expect 500/validation error)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "displayName": "No Email"
+}
+
+### Create User - duplicate oauthId/email (expect 400; run after Create New User)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "oauthId": "github|123456",
+  "displayName": "Jane Duplicate",
+  "email": "jane.driver@example.com"
+}
+
+### Create User - invalid role (expect validation error)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "oauthId": "github|999999",
+  "displayName": "Bad Role",
+  "email": "bad.role@example.com",
+  "role": "Admin"
+}
+
+### Get User - invalid ID format (expect 400)
+GET {{baseUrl}}/not-a-valid-id
+Content-Type: application/json
+
+### Get User - valid but nonexistent ID (expect 404)
+GET {{baseUrl}}/000000000000000000000000
+Content-Type: application/json
