@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:8080/maintenance-logs
+@logId = 6abbe27dca1bc878f1483d82
+
+### Get All Maintenance Logs
+GET {{baseUrl}}
+Content-Type: application/json
+
+### Get Maintenance Log by ID
+GET {{baseUrl}}/{{logId}}
+Content-Type: application/json
+
+### Create New Maintenance Log
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "vehicleId": "6ab873f99536df612ae4774a",
+  "shopId": "6ab85d4f1f36391a05c1af99",
+  "serviceDate": "2026-09-15",
+  "serviceType": "Oil Change",
+  "cost": 89.99,
+  "odometerReading": 15400,
+  "notes": "Synthetic 5W-30, replaced oil filter"
+}
+
+### Create Invalid Maintenance Log (expect 400)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "vehicleId": "not-an-id",
+  "serviceType": "Car Wash",
+  "cost": -10
+}
+
+### Update Maintenance Log
+PUT {{baseUrl}}/{{logId}}
+Content-Type: application/json
+
+{
+  "cost": 109.99,
+  "notes": "Added cabin air filter"
+}
+
+### Delete Maintenance Log
+DELETE {{baseUrl}}/{{logId}}
+Content-Type: application/json
