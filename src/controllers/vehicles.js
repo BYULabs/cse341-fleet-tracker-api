@@ -2,6 +2,7 @@ const Vehicle = require('../models/Vehicle');
 
 // GET all vehicles
 exports.getAllVehicles = async (req, res, next) => {
+  /* #swagger.tags = ['Vehicles'] */
   try {
     const vehicles = await Vehicle.find();
     res.status(200).json(vehicles);
@@ -12,6 +13,7 @@ exports.getAllVehicles = async (req, res, next) => {
 
 // GET single vehicle by ID
 exports.getVehicleById = async (req, res, next) => {
+  /* #swagger.tags = ['Vehicles'] */
   try {
     const vehicle = await Vehicle.findById(req.params.id);
     if (!vehicle) {
@@ -28,8 +30,19 @@ exports.getVehicleById = async (req, res, next) => {
 
 // POST create new vehicle
 exports.createVehicle = async (req, res, next) => {
+  /* #swagger.tags = ['Vehicles'] */
   try {
-    const newVehicle = new Vehicle(req.body);
+    const { vin, make, model, year, licensePlate, mileage, fuelType, status } = req.body;
+    const newVehicle = new Vehicle({
+      vin,
+      make,
+      model,
+      year,
+      licensePlate,
+      mileage,
+      fuelType,
+      status
+    });
     const savedVehicle = await newVehicle.save();
     res.status(201).json(savedVehicle);
   } catch (error) {
@@ -42,11 +55,14 @@ exports.createVehicle = async (req, res, next) => {
 
 // PUT update vehicle by ID
 exports.updateVehicle = async (req, res, next) => {
+  /* #swagger.tags = ['Vehicles'] */
   try {
-    const updatedVehicle = await Vehicle.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const { vin, make, model, year, licensePlate, mileage, fuelType, status } = req.body;
+    const updatedVehicle = await Vehicle.findByIdAndUpdate(
+      req.params.id,
+      { vin, make, model, year, licensePlate, mileage, fuelType, status },
+      { new: true, runValidators: true }
+    );
     if (!updatedVehicle) {
       return res.status(404).json({ message: 'Vehicle not found' });
     }
@@ -64,6 +80,7 @@ exports.updateVehicle = async (req, res, next) => {
 
 // DELETE vehicle by ID
 exports.deleteVehicle = async (req, res, next) => {
+  /* #swagger.tags = ['Vehicles'] */
   try {
     const deletedVehicle = await Vehicle.findByIdAndDelete(req.params.id);
     if (!deletedVehicle) {

@@ -31,6 +31,7 @@ const vehicleExists = async (vehicleId) => {
 
 // GET all maintenance logs
 exports.getAllLogs = async (req, res, next) => {
+  /* #swagger.tags = ['Maintenance Logs'] */
   try {
     const logs = await populateRefs(MaintenanceLog.find().sort({ serviceDate: -1 }));
     res.status(200).json(logs);
@@ -41,6 +42,7 @@ exports.getAllLogs = async (req, res, next) => {
 
 // GET single maintenance log by ID
 exports.getLogById = async (req, res, next) => {
+  /* #swagger.tags = ['Maintenance Logs'] */
   try {
     const log = await populateRefs(MaintenanceLog.findById(req.params.id));
     if (!log) {
@@ -54,11 +56,21 @@ exports.getLogById = async (req, res, next) => {
 
 // POST create new maintenance log
 exports.createLog = async (req, res, next) => {
+  /* #swagger.tags = ['Maintenance Logs'] */
   try {
-    if (req.body.vehicleId && !(await vehicleExists(req.body.vehicleId))) {
+    const { vehicleId, shopId, serviceDate, serviceType, cost, odometerReading, notes } = req.body;
+    if (vehicleId && !(await vehicleExists(vehicleId))) {
       return res.status(404).json({ message: 'Referenced vehicle not found' });
     }
-    const newLog = new MaintenanceLog(req.body);
+    const newLog = new MaintenanceLog({
+      vehicleId,
+      shopId,
+      serviceDate,
+      serviceType,
+      cost,
+      odometerReading,
+      notes
+    });
     const savedLog = await newLog.save();
     res.status(201).json(savedLog);
   } catch (error) {
@@ -68,14 +80,17 @@ exports.createLog = async (req, res, next) => {
 
 // PUT update maintenance log by ID
 exports.updateLog = async (req, res, next) => {
+  /* #swagger.tags = ['Maintenance Logs'] */
   try {
-    if (req.body.vehicleId && !(await vehicleExists(req.body.vehicleId))) {
+    const { vehicleId, shopId, serviceDate, serviceType, cost, odometerReading, notes } = req.body;
+    if (vehicleId && !(await vehicleExists(vehicleId))) {
       return res.status(404).json({ message: 'Referenced vehicle not found' });
     }
-    const updatedLog = await MaintenanceLog.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const updatedLog = await MaintenanceLog.findByIdAndUpdate(
+      req.params.id,
+      { vehicleId, shopId, serviceDate, serviceType, cost, odometerReading, notes },
+      { new: true, runValidators: true }
+    );
     if (!updatedLog) {
       return res.status(404).json({ message: 'Maintenance log not found' });
     }
@@ -87,6 +102,7 @@ exports.updateLog = async (req, res, next) => {
 
 // DELETE maintenance log by ID
 exports.deleteLog = async (req, res, next) => {
+  /* #swagger.tags = ['Maintenance Logs'] */
   try {
     const deletedLog = await MaintenanceLog.findByIdAndDelete(req.params.id);
     if (!deletedLog) {

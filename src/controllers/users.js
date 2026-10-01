@@ -2,6 +2,7 @@ const User = require('../models/User');
 
 // GET all users
 exports.getAllUsers = async (req, res, next) => {
+  /* #swagger.tags = ['Users'] */
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -12,6 +13,7 @@ exports.getAllUsers = async (req, res, next) => {
 
 // GET single user by ID
 exports.getUserById = async (req, res, next) => {
+  /* #swagger.tags = ['Users'] */
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -28,8 +30,10 @@ exports.getUserById = async (req, res, next) => {
 
 // POST create new user
 exports.createUser = async (req, res, next) => {
+  /* #swagger.tags = ['Users'] */
   try {
-    const newUser = new User(req.body);
+    const { oauthId, displayName, email, role } = req.body;
+    const newUser = new User({ oauthId, displayName, email, role });
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
@@ -42,11 +46,14 @@ exports.createUser = async (req, res, next) => {
 
 // PUT update user by ID
 exports.updateUser = async (req, res, next) => {
+  /* #swagger.tags = ['Users'] */
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const { oauthId, displayName, email, role } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { oauthId, displayName, email, role },
+      { new: true, runValidators: true }
+    );
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -60,6 +67,7 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
+  /* #swagger.tags = ['Users'] */
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) {
