@@ -1,4 +1,5 @@
-const swaggerAutogen = require('swagger-autogen')();
+// OpenAPI 3 so `servers` is honored (Swagger 2.0 output ignores it and defaults host to localhost:3000)
+const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0' });
 
 const doc = {
   info: {
