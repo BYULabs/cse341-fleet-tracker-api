@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const Vehicle = require('../models/Vehicle');
+const MaintenanceLog = require('../models/MaintenanceLog');
+const handleError = require('../utils/handleError');
 
 // GET all vehicles
 exports.getAllVehicles = async (req, res, next) => {
@@ -7,7 +10,7 @@ exports.getAllVehicles = async (req, res, next) => {
     const vehicles = await Vehicle.find();
     res.status(200).json(vehicles);
   } catch (error) {
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -21,10 +24,7 @@ exports.getVehicleById = async (req, res, next) => {
     }
     res.status(200).json(vehicle);
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: 'Invalid Vehicle ID format' });
-    }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -49,7 +49,7 @@ exports.createVehicle = async (req, res, next) => {
     if (error.code === 11000) {
       return res.status(400).json({ message: 'A vehicle with this VIN already exists' });
     }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -71,10 +71,7 @@ exports.updateVehicle = async (req, res, next) => {
     if (error.code === 11000) {
       return res.status(400).json({ message: 'A vehicle with this VIN already exists' });
     }
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: 'Invalid Vehicle ID format' });
-    }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -82,15 +79,21 @@ exports.updateVehicle = async (req, res, next) => {
 exports.deleteVehicle = async (req, res, next) => {
   /* #swagger.tags = ['Vehicles'] */
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid Vehicle ID format' });
+    }
+    const logCount = await MaintenanceLog.countDocuments({ vehicleId: req.params.id });
+    if (logCount > 0) {
+      return res.status(409).json({
+        message: `Cannot delete vehicle with ${logCount} maintenance log(s); delete its logs first`
+      });
+    }
     const deletedVehicle = await Vehicle.findByIdAndDelete(req.params.id);
     if (!deletedVehicle) {
       return res.status(404).json({ message: 'Vehicle not found' });
     }
     res.status(200).json({ message: 'Vehicle successfully deleted', id: req.params.id });
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: 'Invalid Vehicle ID format' });
-    }
-    next(error);
+    handleError(error, res, next);
   }
 };

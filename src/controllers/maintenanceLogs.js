@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const MaintenanceLog = require('../models/MaintenanceLog');
 const Vehicle = require('../models/Vehicle');
+const handleError = require('../utils/handleError');
 
 // Populate referenced documents; ServiceShop is only populated once its model is registered
 const populateRefs = (query) => {
@@ -9,18 +10,6 @@ const populateRefs = (query) => {
     query.populate('shopId');
   }
   return query;
-};
-
-// Shared error handling for known Mongoose errors
-const handleError = (error, res, next) => {
-  if (error.name === 'ValidationError') {
-    const messages = Object.values(error.errors).map((err) => err.message);
-    return res.status(400).json({ message: 'Validation failed', errors: messages });
-  }
-  if (error.name === 'CastError' && error.kind === 'ObjectId') {
-    return res.status(400).json({ message: `Invalid ID format for ${error.path}` });
-  }
-  next(error);
 };
 
 // Ensure the referenced vehicle exists before saving a log
