@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const handleError = require('../utils/handleError');
 
 // GET all users
 exports.getAllUsers = async (req, res, next) => {
@@ -7,7 +8,7 @@ exports.getAllUsers = async (req, res, next) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -21,10 +22,7 @@ exports.getUserById = async (req, res, next) => {
     }
     res.status(200).json(user);
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: 'Invalid User ID format' });
-    }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -40,7 +38,7 @@ exports.createUser = async (req, res, next) => {
     if (error.code === 11000) {
       return res.status(400).json({ message: 'A user with this OAuth ID or email already exists' });
     }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -62,7 +60,7 @@ exports.updateUser = async (req, res, next) => {
     if (error.code === 11000) {
       return res.status(400).json({ message: 'A user with this OAuth ID or email already exists' });
     }
-    next(error);
+    handleError(error, res, next);
   }
 };
 
@@ -75,9 +73,6 @@ exports.deleteUser = async (req, res, next) => {
     }
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({ message: 'Invalid User ID format' });
-    }
-    next(error);
+    handleError(error, res, next);
   }
 };
