@@ -45,7 +45,9 @@ exports.getLogById = async (req, res, next) => {
 
 // POST create new maintenance log
 exports.createLog = async (req, res, next) => {
-  /* #swagger.tags = ['Maintenance Logs'] */
+  /* #swagger.tags = ['Maintenance Logs']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { vehicleId, shopId, serviceDate, serviceType, cost, odometerReading, notes } = req.body;
     if (vehicleId && !(await vehicleExists(vehicleId))) {
@@ -69,7 +71,9 @@ exports.createLog = async (req, res, next) => {
 
 // PUT update maintenance log by ID
 exports.updateLog = async (req, res, next) => {
-  /* #swagger.tags = ['Maintenance Logs'] */
+  /* #swagger.tags = ['Maintenance Logs']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { vehicleId, shopId, serviceDate, serviceType, cost, odometerReading, notes } = req.body;
     if (vehicleId && !(await vehicleExists(vehicleId))) {
@@ -91,7 +95,9 @@ exports.updateLog = async (req, res, next) => {
 
 // DELETE maintenance log by ID
 exports.deleteLog = async (req, res, next) => {
-  /* #swagger.tags = ['Maintenance Logs'] */
+  /* #swagger.tags = ['Maintenance Logs']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const deletedLog = await MaintenanceLog.findByIdAndDelete(req.params.id);
     if (!deletedLog) {

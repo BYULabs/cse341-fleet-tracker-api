@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Fleet Tracker API",
-    "description": "CSE 341 Project REST API for managing vehicles, users, and maintenance logs",
+    "description": "CSE 341 Project REST API for managing vehicles, users, maintenance logs, and service shops.<br><br>POST, PUT and DELETE routes require login. <a href=\"/auth/google\">Log in with Google</a> in this browser tab, then come back here: the session cookie is sent automatically with every request. <a href=\"/auth/logout\">Log out</a>.",
     "version": "1.0.0"
   },
   "servers": [
@@ -22,6 +22,10 @@
     {
       "name": "Maintenance Logs",
       "description": "Endpoints for managing maintenance logs"
+    },
+    {
+      "name": "Service Shops",
+      "description": "Endpoints for managing service shops"
     }
   ],
   "paths": {
@@ -48,8 +52,16 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -134,10 +146,18 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -196,13 +216,21 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           },
           "409": {
             "description": "Conflict"
           }
-        }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
       }
     },
     "/maintenance-logs/": {
@@ -226,10 +254,18 @@
           "201": {
             "description": "Created"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -308,10 +344,18 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -364,10 +408,18 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
       }
     },
     "/users/": {
@@ -393,8 +445,16 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -467,10 +527,18 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -514,16 +582,24 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
       }
     },
     "/service-shops/": {
       "get": {
         "tags": [
-          "ServiceShops"
+          "Service Shops"
         ],
         "description": "",
         "responses": {
@@ -534,14 +610,22 @@
       },
       "post": {
         "tags": [
-          "ServiceShops"
+          "Service Shops"
         ],
         "description": "",
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -552,7 +636,7 @@
                     "example": "any"
                   },
                   "phone": {
-                    "example": "+0-123-456-7890"
+                    "example": "any"
                   },
                   "address": {
                     "example": "any"
@@ -561,7 +645,7 @@
                     "example": "any"
                   },
                   "rating": {
-                    "example": "4.2"
+                    "example": "any"
                   }
                 }
               }
@@ -573,7 +657,7 @@
     "/service-shops/{id}": {
       "get": {
         "tags": [
-          "ServiceShops"
+          "Service Shops"
         ],
         "description": "",
         "parameters": [
@@ -597,7 +681,7 @@
       },
       "put": {
         "tags": [
-          "ServiceShops"
+          "Service Shops"
         ],
         "description": "",
         "parameters": [
@@ -614,10 +698,18 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
         },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -647,7 +739,7 @@
       },
       "delete": {
         "tags": [
-          "ServiceShops"
+          "Service Shops"
         ],
         "description": "",
         "parameters": [
@@ -664,10 +756,28 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Not logged in"
+          },
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid",
+        "description": "Session cookie set after logging in at /auth/google"
       }
     }
   }
