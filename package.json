@@ -23,10 +23,14 @@
   },
   "homepage": "https://github.com/BYULabs/cse341-fleet-tracker-api#readme",
   "dependencies": {
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "mongoose": "^9.10.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
