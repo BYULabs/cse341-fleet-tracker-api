@@ -1,6 +1,6 @@
 {
   "name": "cse341-fleet-tracker-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Vehicle Fleet & Maintenance Tracker REST API built with Node.js, Express, MongoDB, OAuth, and Swagger docs.",
   "main": "server.js",
   "scripts": {
