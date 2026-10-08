@@ -30,7 +30,9 @@ exports.getVehicleById = async (req, res, next) => {
 
 // POST create new vehicle
 exports.createVehicle = async (req, res, next) => {
-  /* #swagger.tags = ['Vehicles'] */
+  /* #swagger.tags = ['Vehicles']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { vin, make, model, year, licensePlate, mileage, fuelType, status } = req.body;
     const newVehicle = new Vehicle({
@@ -55,7 +57,9 @@ exports.createVehicle = async (req, res, next) => {
 
 // PUT update vehicle by ID
 exports.updateVehicle = async (req, res, next) => {
-  /* #swagger.tags = ['Vehicles'] */
+  /* #swagger.tags = ['Vehicles']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { vin, make, model, year, licensePlate, mileage, fuelType, status } = req.body;
     const updatedVehicle = await Vehicle.findByIdAndUpdate(
@@ -77,7 +81,9 @@ exports.updateVehicle = async (req, res, next) => {
 
 // DELETE vehicle by ID
 exports.deleteVehicle = async (req, res, next) => {
-  /* #swagger.tags = ['Vehicles'] */
+  /* #swagger.tags = ['Vehicles']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({ message: 'Invalid Vehicle ID format' });

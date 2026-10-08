@@ -28,7 +28,9 @@ exports.getUserById = async (req, res, next) => {
 
 // POST create new user
 exports.createUser = async (req, res, next) => {
-  /* #swagger.tags = ['Users'] */
+  /* #swagger.tags = ['Users']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { oauthId, displayName, email, role } = req.body;
     const newUser = new User({ oauthId, displayName, email, role });
@@ -44,7 +46,9 @@ exports.createUser = async (req, res, next) => {
 
 // PUT update user by ID
 exports.updateUser = async (req, res, next) => {
-  /* #swagger.tags = ['Users'] */
+  /* #swagger.tags = ['Users']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { oauthId, displayName, email, role } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -65,7 +69,9 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-  /* #swagger.tags = ['Users'] */
+  /* #swagger.tags = ['Users']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) {

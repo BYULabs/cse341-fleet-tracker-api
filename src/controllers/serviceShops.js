@@ -3,7 +3,7 @@ const handleError = require('../utils/handleError');
 
 // GET all service shops
 exports.getAllServiceShops = async (req, res, next) => {
-  /* #swagger.tags = ['ServiceShops'] */
+  /* #swagger.tags = ['Service Shops'] */
   try {
     const serviceShops = await ServiceShop.find();
     res.status(200).json(serviceShops);
@@ -14,7 +14,7 @@ exports.getAllServiceShops = async (req, res, next) => {
 
 // GET a single service shop by ID
 exports.getServiceShopById = async (req, res, next) => {
-  /* #swagger.tags = ['ServiceShops'] */
+  /* #swagger.tags = ['Service Shops'] */
   try {
     const serviceShop = await ServiceShop.findById(req.params.id);
     if (!serviceShop) {
@@ -28,7 +28,9 @@ exports.getServiceShopById = async (req, res, next) => {
 
 // POST a new service shop
 exports.createServiceShop = async (req, res, next) => {
-  /* #swagger.tags = ['ServiceShops'] */
+  /* #swagger.tags = ['Service Shops']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { shopName, phone, address, specialty, rating } = req.body;
     const serviceShop = new ServiceShop({
@@ -47,7 +49,9 @@ exports.createServiceShop = async (req, res, next) => {
 
 // UPDATE a service shop by ID
 exports.updateServiceShop = async (req, res, next) => {
-  /* #swagger.tags = ['ServiceShops'] */
+  /* #swagger.tags = ['Service Shops']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const { shopName, phone, address, specialty, rating } = req.body;
     const serviceShop = await ServiceShop.findByIdAndUpdate(
@@ -66,7 +70,9 @@ exports.updateServiceShop = async (req, res, next) => {
 
 // DELETE a service shop by ID
 exports.deleteServiceShop = async (req, res, next) => {
-  /* #swagger.tags = ['ServiceShops'] */
+  /* #swagger.tags = ['Service Shops']
+     #swagger.security = [{ "cookieAuth": [] }]
+     #swagger.responses[401] = { description: 'Not logged in' } */
   try {
     const serviceShop = await ServiceShop.findByIdAndDelete(req.params.id);
     if (!serviceShop) {
