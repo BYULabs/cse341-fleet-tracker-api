@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
+    "test": "jest",
     "swagger": "node swagger.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -38,6 +39,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-node": "^11.1.0",
     "globals": "^17.12.0",
+    "jest": "^30.5.2",
     "prettier": "^3.9.6",
     "swagger-autogen": "^2.23.7"
   }
